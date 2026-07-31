@@ -1,41 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#25164f">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Someone Special ✨</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body class="loading">
 
+    <!-- FAST 1-SECOND LOADER -->
     <div id="intro">
-        <!-- Minimal sleek modern spinner icon -->
-        <div class="minimalSpinner"></div>
+        <div class="loaderHeart">✨</div>
     </div>
 
+    <!-- Firebase SDK (v10 Modular) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getFirestore, doc, setDoc, arrayUnion, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      // Your Exact Firebase Config Keys
+      const firebaseConfig = {
+        apiKey: "AIzaSyAu9S1dTo33ZXBXDFUxs0g5gCEURM-8Xgc",
+        authDomain: "myspecialtracker.firebaseapp.com",
+        projectId: "myspecialtracker",
+        storageBucket: "myspecialtracker.firebasestorage.app",
+        messagingSenderId: "257998904262",
+        appId: "1:257998904262:web:917ab6343902192adab0c7"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Session ID generator (#A8F3D2 format)
+      function generateSessionId() {
+        return 'Session #' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      }
+
+      const sessionId = generateSessionId();
+
+      // Tracker object exposed globally to script.js
+      window.tracker = {
+        sessionId: sessionId,
+        firstClicked: null,
+
+        async logEvent(eventName, extraData = {}) {
+          try {
+            const sessionRef = doc(db, "sessions", sessionId);
+            
+            const eventPayload = {
+              event: eventName,
+              timestamp: new Date().toISOString(),
+              ...extraData
+            };
+
+            await setDoc(sessionRef, {
+              sessionId: sessionId,
+              lastUpdated: serverTimestamp(),
+              events: arrayUnion(eventPayload)
+            }, { merge: true });
+
+          } catch (error) {
+            console.error("Tracking Error:", error);
+          }
+        }
+      };
+
+      // Auto-log website opening event
+      window.tracker.logEvent("Website opened", {
+        userAgent: navigator.userAgent
+      });
+    </script>
+
+    <!-- MAIN APP STRUCTURE -->
     <div id="stars"></div>
     <div id="romanticBg"></div>
     <div id="shootingStars"></div>
     <div id="floatingHearts"></div>
+
+    <div id="app">
+        <div id="card">
+            <div id="content"></div>
+        </div>
+    </div>
+
+    <div id="popupContainer"></div>
     <div id="backgroundQuotes"></div>
+
     <div id="heartExplosion"></div>
     <div id="confetti"></div>
 
-    <div id="touchGlow"></div>
     <div id="touchRippleContainer"></div>
+    <div id="touchGlow"></div>
 
-    <div id="popupContainer"></div>
-
-    <main id="card">
-        <div id="content"></div>
-    </main>
-
+    <!-- Application Script -->
     <script src="script.js"></script>
-
 </body>
 </html>
