@@ -45,7 +45,7 @@
       const sessionId = generateSessionId();
       const sessionStartTime = Date.now();
 
-      // IP & Provider Fetcher (Jio, BSNL, Airtel, etc.)
+      // IP & Network Provider Fetcher (Jio, BSNL, Airtel, etc.)
       async function getNetworkDetails() {
         try {
           const controller = new AbortController();
