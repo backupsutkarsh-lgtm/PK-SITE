@@ -1,0 +1,465 @@
+/* ==========================================
+   FOR SOMEONE SPECIAL ✨
+   RESET + BODY + INTRO + BACKGROUND
+========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#05070f;
+    color:white;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* ==========================================
+   MINIMAL 1-SECOND LOADER
+========================================== */
+#intro{
+    position:fixed;
+    inset:0;
+    background:#05070f;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.minimalSpinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    border-top-color: rgba(255, 255, 255, 0.75);
+    animation: spin 0.8s infinite linear;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   BACKGROUND
+========================================== */
+#stars,
+#romanticBg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+}
+
+#stars{
+    background: radial-gradient(circle at top, #203a70, #090d1a 60%, #03050a);
+    opacity:0;
+    transition: opacity 3s ease;
+    z-index:-5;
+}
+
+#romanticBg{
+    background: radial-gradient(circle at center, #5b216b, #180521 55%, #050008);
+    opacity:0;
+    transition: opacity 4s ease;
+    z-index:-4;
+}
+
+body.romantic #stars{ opacity:.35; }
+body.romantic #romanticBg{ opacity:1; }
+
+/* ==========================================
+   STARS
+========================================== */
+.star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:.6;
+    animation: twinkle 5s infinite ease-in-out;
+}
+
+@keyframes twinkle{
+    0%, 100%{ opacity:.2; transform:scale(.8); }
+    50%{ opacity:1; transform:scale(1.4); }
+}
+
+/* ==========================================
+   SHOOTING STARS
+========================================== */
+#shootingStars{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-2;
+}
+
+.shootingStar{
+    position:absolute;
+    width:180px;
+    height:2px;
+    background: linear-gradient(90deg, white, transparent);
+    transform:rotate(-35deg);
+    animation: shooting 1.8s linear forwards;
+}
+
+@keyframes shooting{
+    0%{ opacity:0; transform: translate(0,0) rotate(-35deg); }
+    20%{ opacity:1; }
+    100%{ opacity:0; transform: translate(-500px,500px) rotate(-35deg); }
+}
+
+/* ==========================================
+   FLOATING ELEMENTS (Stars, sparks, and few hearts)
+========================================== */
+#floatingHearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.floatingHeart{
+    position:absolute;
+    bottom:-40px;
+    animation: floatHeart 10s linear forwards;
+    opacity:.35;
+}
+
+@keyframes floatHeart{
+    0%{ transform: translateY(0) rotate(0deg); opacity:0; }
+    15%{ opacity:.35; }
+    100%{ transform: translateY(-110vh) rotate(360deg); opacity:0; }
+}
+
+/* ==========================================
+   TOUCH GLOW
+========================================== */
+#touchGlow{
+    position:fixed;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    pointer-events:none;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.35), transparent 70%);
+    transform: translate(-50%,-50%) scale(0);
+    opacity:0;
+    z-index:999;
+}
+
+.animateGlow{ animation: touchGlow .8s ease-out; }
+
+@keyframes touchGlow{
+    0%{ opacity:1; transform: translate(-50%,-50%) scale(.2); }
+    100%{ opacity:0; transform: translate(-50%,-50%) scale(1.8); }
+}
+
+/* ==========================================
+   TOUCH RIPPLE
+========================================== */
+#touchRippleContainer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:998;
+}
+
+.touchRipple{
+    position:absolute;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background: rgba(255,255,255,.35);
+    transform: translate(-50%,-50%);
+    animation: ripple .7s ease-out forwards;
+}
+
+@keyframes ripple{
+    0%{ opacity:.8; width:20px; height:20px; }
+    100%{ opacity:0; width:220px; height:220px; }
+}
+
+/* ==========================================
+   MAIN CARD
+========================================== */
+#card{
+    width:88%;
+    max-width:500px;
+    min-height:360px;
+    padding:55px 40px;
+    border-radius:28px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    opacity:0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(.25,1,.5,1);
+}
+
+#content{ width:100%; }
+
+/* ==========================================
+   TEXT
+========================================== */
+h1{
+    font-size:36px;
+    line-height:1.3;
+    margin-bottom:22px;
+    font-weight:700;
+}
+
+p{
+    font-size:24px;
+    line-height:1.7;
+    opacity:.9;
+}
+
+.storyPage{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+/* ==========================================
+   FADE ITEMS
+========================================== */
+.fadeItem{
+    opacity:0;
+    transform: translateY(25px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.fadeItem.show{
+    opacity:1;
+    transform: translateY(0);
+}
+
+#tapHint{
+    margin-top:20px;
+    font-size:13px;
+    opacity:.5;
+    animation: hintPulse 2s infinite;
+}
+
+@keyframes hintPulse{
+    0%, 100%{ opacity:.3; }
+    50%{ opacity:.8; }
+}
+
+/* ==========================================
+   PROPOSAL SCENE
+========================================== */
+.proposalScene{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+}
+
+.proposalStar{
+    font-size:70px;
+    animation: starSpin 3s infinite linear;
+}
+
+@keyframes starSpin{
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+}
+
+.proposalQuestion{
+    font-size:26px;
+    line-height:1.5;
+}
+
+.buttonGroup{
+    display:flex;
+    gap:18px;
+    width:100%;
+    justify-content:center;
+    margin-top:25px;
+}
+
+button{
+    border:none;
+    outline:none;
+    padding:15px 28px;
+    border-radius:50px;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor:pointer;
+}
+
+button:active{ transform:scale(.94); }
+#noBtn{
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+}
+
+/* ==========================================
+   POPUP
+========================================== */
+#popupContainer{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    pointer-events:none;
+    z-index:1000;
+}
+
+.popup{
+    max-width:80%;
+    padding:18px 24px;
+    border-radius:22px;
+    background: rgba(15, 10, 25, 0.85);
+    border: 1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    font-size:16px;
+    font-weight: 500;
+    text-align:center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    animation: popupIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+@keyframes popupIn{
+    from{ opacity:0; transform: translateY(30px) scale(.8); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================
+   BACKGROUND QUOTES
+========================================== */
+#backgroundQuotes{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.backgroundQuote{
+    position:absolute;
+    padding:10px 16px;
+    border-radius:20px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(8px);
+    font-size:14px;
+    opacity: 0.4;
+    animation: quoteFloat 5s ease forwards;
+}
+
+@keyframes quoteFloat{
+    0%{ opacity:0; transform:translateY(25px) scale(.8); }
+    20%{ opacity:.45; }
+    80%{ opacity:.45; }
+    100%{ opacity:0; transform:translateY(-35px) scale(1); }
+}
+
+/* ==========================================
+   FINAL PAGE
+========================================== */
+.finalScene{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+}
+
+.finalHeart{
+    font-size:75px;
+    animation: heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat{
+    0%, 100%{ transform:scale(1); }
+    50%{ transform:scale(1.15); }
+}
+
+.finalScene h1{ font-size:28px; }
+.finalScene p{ font-size:16px; line-height:1.8; }
+
+/* ==========================================
+   SPARK / HEART EXPLOSION
+========================================== */
+#heartExplosion{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2000;
+}
+
+.explodeHeart{
+    position:absolute;
+    left:50%;
+    top:50%;
+    font-size:25px;
+    animation: explode 2s ease forwards;
+}
+
+@keyframes explode{
+    from{ transform: translate(0,0) scale(.5); opacity:1; }
+    to{ transform: translate(var(--x),var(--y)) scale(1.4); opacity:0; }
+}
+
+/* ==========================================
+   CONFETTI
+========================================== */
+#confetti{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2000;
+}
+
+.confettiPiece{
+    position:absolute;
+    top:-20px;
+    width:8px;
+    height:18px;
+    background:white;
+    animation: confettiFall 4s linear forwards;
+}
+
+@keyframes confettiFall{
+    to{ transform: translateY(110vh) rotate(720deg); opacity:0; }
+}
+
+/* ==========================================
+   MOBILE FINAL ADJUSTMENTS
+========================================== */
+@media(max-width:600px){
+    #card{ width:92%; min-height:350px; padding:30px 20px; }
+    .proposalQuestion{ font-size:22px; }
+    .buttonGroup{ flex-direction:column; }
+    button{ width:100%; }
+}
