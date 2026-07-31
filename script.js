@@ -3,7 +3,7 @@
 // CONFIG + ELEMENTS + GLOBALS
 // ==========================================
 
-const MAX_NO_CLICKS = 4; 
+const MAX_NO_CLICKS = 4; // Matches the 3 intermediate popups + final 4th click state
 const MAX_BACKGROUND_QUOTES = 6;
 
 const body = document.body;
@@ -38,7 +38,7 @@ const story = [
     { title: "", text: "So... here goes nothing. 🤞🏻" }
 ];
 
-// Helper log function wrapper
+// Firebase Tracker Wrapper
 function track(eventName, payload = {}) {
     if (window.tracker && window.tracker.logEvent) {
         window.tracker.logEvent(eventName, payload);
