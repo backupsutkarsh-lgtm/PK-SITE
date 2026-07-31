@@ -3,7 +3,7 @@
 // CONFIG + ELEMENTS + GLOBALS
 // ==========================================
 
-const MAX_NO_CLICKS = 4; // Matches the 3 intermediate popups + final 4th click state
+const MAX_NO_CLICKS = 4; 
 const MAX_BACKGROUND_QUOTES = 6;
 
 const body = document.body;
@@ -37,6 +37,13 @@ const story = [
     { title: "", text: "You said what you did back then was cringe. 😂\nI guess it's my turn now. 😅" },
     { title: "", text: "So... here goes nothing. 🤞🏻" }
 ];
+
+// Helper log function wrapper
+function track(eventName, payload = {}) {
+    if (window.tracker && window.tracker.logEvent) {
+        window.tracker.logEvent(eventName, payload);
+    }
+}
 
 // ==========================================
 // FAST LOADER (1 SECOND) + INIT
@@ -104,6 +111,7 @@ function startStory() {
     card.style.opacity = "1";
     card.style.transform = "translateY(0)";
     storyIndex = 0;
+    track("Story started");
     showStory();
 }
 
@@ -144,6 +152,7 @@ async function nextStory(e) {
     storyIndex++;
 
     if (storyIndex >= story.length) {
+        track("Story completed");
         changeTheme();
         return;
     }
@@ -207,6 +216,7 @@ function startFloatingMix() {
 }
 
 function showProposal() {
+    track("Proposal screen reached");
     content.innerHTML = `
         <div class="proposalScene">
             <div class="proposalStar hidden">✨</div>
@@ -237,6 +247,16 @@ async function animateProposal() {
 // ==========================================
 
 async function yesClicked() {
+    if (!window.tracker.firstClicked) {
+        window.tracker.firstClicked = "YES";
+    }
+
+    track("YES button clicked", {
+        firstButtonClicked: window.tracker.firstClicked,
+        totalNoClicks: noClicks,
+        finalResult: "YES"
+    });
+
     stopBackgroundQuotes();
     explodeSparks(); 
     launchConfetti();
@@ -250,9 +270,24 @@ async function yesClicked() {
 
 function noClicked() {
     noClicks++;
+    if (!window.tracker.firstClicked) {
+        window.tracker.firstClicked = "NO";
+    }
+
+    track("NO button clicked", {
+        noClickCount: noClicks,
+        firstButtonClicked: window.tracker.firstClicked
+    });
+
     if (noClicks === 1) startBackgroundQuotes();
 
     if (noClicks >= MAX_NO_CLICKS) {
+        track("Final result reached", {
+            finalResult: "FINAL_NO",
+            totalNoClicks: noClicks,
+            firstButtonClicked: window.tracker.firstClicked
+        });
+
         stopBackgroundQuotes();
         showFinalNoPopup("Okay then... worth a try. 😂😂<br>It's all good.<br>Thanks for checking this out. 😅👋🏻");
         document.getElementById("yesBtn").disabled = true;
@@ -339,7 +374,8 @@ function createBackgroundQuote() {
 // ==========================================
 
 async function showFinalPage(){
-    // Removed the button element from HTML template
+    track("Final page reached");
+
     content.innerHTML = `
     <div class="finalScene">
         <div class="finalHeart fadeItem">❤️</div>
@@ -353,7 +389,6 @@ async function showFinalPage(){
         item.classList.add("show");
     }
 
-    // Automatically trigger explosion & confetti once the screen renders
     explodeSparks();
     launchConfetti();
 }
